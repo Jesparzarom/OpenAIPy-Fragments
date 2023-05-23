@@ -1,0 +1,20 @@
+{
+  "name": "openaipy-fragments",
+  "displayName": "OpenAIPY Fragments",
+  "description": "Simplify your coding with ready-to-use Python snippets for Chat GPT using OpenAI's GPT model.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "python",
+        "path": "./snippets/snippets.code-snippets"
+      }
+    ]
+  }
+}

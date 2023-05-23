@@ -1,0 +1,200 @@
+{
+	"SETUP_BASIC" : {
+		"prefix": "setup init basic (OAIPy)",
+		"body": [
+			"import openai",
+			"",
+			"openai.api_key  = \"${1}\"",
+		],
+		"description": "Get imports"
+	},
+
+	"SETUP_DOTENV" : {
+		"prefix": "setup init dotenv (OAIPy)",
+		"body": [
+			"import openai",
+			"from dotenv import load_dotenv, find_dotenv",
+			"",
+			"import os",
+			"",
+			"_ = load_dotenv(find_dotenv())",
+			"openai.api_key  = os.getenv('OPENAI_API_KEY')",
+		],
+		"description": "Get imports and secret key"
+	},
+
+
+	/* **************************************************************
+	******************** HELPER FUNCTIONS*************************** */
+	"TEXT_BASIC": {
+		"prefix": "def text completion basic (OAIPy) ",
+		"body": [
+			"def text_completion(model, prompt):",
+			"    response = openai.Completion.create(",
+			"        model=model,",
+			"        prompt=prompt",
+			"        max_tokens=50,",
+			"    )",
+			"    return response.choices[0].text.strip()"
+		],
+		"description": "Get completion basic parameters for text models"
+	},
+
+	"TEXT_FULL": {
+		"prefix": "def text completion full (OAIPy)",
+		"body": [
+			"def text_completion():",
+			"    openai.Completion.create(",
+			"        model=\"\",",
+			"        prompt=\"\",",
+			"        suffix=None,",
+			"        max_tokens=16,",
+			"        temperature=1,",
+			"        top_p=1,",
+			"        n=1,",
+			"        stream=False,",
+			"        logprobs=None,",
+			"        echo=False,",
+			"        stop=None,",
+			"        presence_penalty=0,",
+			"        frequency_penalty=0,",
+			"        best_of=1,",
+			"        logit_bias=None",
+			"    )"
+		],
+		"description": "Get completion full parameters for text models"
+	},
+
+	"CHAT_BASIC": {
+		"prefix": "def chat completion basic (OAIPy) ",
+		"body": [
+			"def chat_completion():",
+			"    openai.ChatCompletion.create(",
+			"        model=\"\",",
+			"        messages=[]",
+			"    )"
+		],
+		"description": "Get completion basic parameters for chat models"
+	},
+
+	"CHAT_FULL": {
+		"prefix": "def chat completion full (OAIPy)",
+		"body": [
+			"def chat_completion():",
+			"    openai.ChatCompletion.create(",
+			"        model=\"\",",
+			"        messages=[],",
+			"        temperature=1,",
+			"        top_p=1,",
+			"        n=1,",
+			"        stream=False,",
+			"        stop=None,",
+			"        max_tokens=Infinity,",
+			"        presence_penalty=0,",
+			"        frequency_penalty=0,",
+			"        logit_bias=None",
+			"    )"
+		],
+		"description": "Get completion full parameters for chat models"
+	},
+
+	"EDIT_BASIC": {
+		"prefix": "def edit completion basic (OAIPy) ",
+		"body": [
+			"def edit_completion():",
+			"    openai.Completion.create(",
+			"        model=\"\",",
+			"        prompt=\"\",",
+			"        documents=None,",
+			"        file=None,",
+			"        max_tokens=16,",
+			"    )"
+		]
+	},
+
+	"EDIT_FULL": {
+		"prefix": "def edit completion full (OAIPy)",
+		"body": [
+			"def edit_completion():",
+			"    openai.Completion.create(",
+			"        model=\"\",",
+			"        prompt=\"\",",
+			"        documents=None,",
+			"        file=None,",
+			"        max_tokens=16,",
+			"        temperature=1,",
+			"        top_p=1,",
+			"        n=1,",
+			"        stream=False,",
+			"        logprobs=None,",
+			"        stop=None,",
+			"        logit_bias=None,",
+			"        return_prompt=False,",
+			"        return_completion=False,",
+			"        expand=False,",
+			"        include_logprobs=None,",
+			"        return_tokens=False,",
+			"        return_full_text=False",
+			"    )"
+		],
+		"description": "Get completion for complex edit models"
+	},
+
+	/* **************************************************************
+	************************ PARAMETERS *************************** */
+	"model_parameter": {
+		"prefix": "model (OAIPy)",
+		"body": "model=\"${1}\",",
+		"description": "Specifies the GPT model to be used.\n\nEg. values: \n- 'gpt-3.5-turbo': GPT-3.5 Turbo model\n- 'text-davinci-003': Text Davinci 003 model\n- 'curie': Curie model\n- 'babbage': Babbage model\n- 'davinci': Davinci model"
+	},
+	"messages_parameter": {
+		"prefix": "messages (OAIPy)",
+		"body": "messages=[${1}],",
+		"description": "A list of messages exchanged in a conversation for the model to generate a response based on the conversation history.\n\nValues: A list of message objects, where each object contains 'role' and 'content' properties. Example:\n\n[\n  { \"role\": \"system\", \"content\": \"You are a helpful assistant.\" },\n  { \"role\": \"user\", \"content\": \"What's the weather like today?\" }\n]\n\n"
+	},
+	"temperature_parameter": {
+		"prefix": "temperature (OAIPy)",
+		"body": "temperature=${1:1},",
+		"description": "Controls the randomness of the generated output. Higher values (e.g., 1.0) make the output more random, while lower values (e.g., 0.2) make it more focused and deterministic."
+	},
+	"top_p_parameter": {
+		"prefix": "top_p (OAIPy)",
+		"body": "top_p=${1:1},",
+		"description": "Controls the diversity of the generated output. It limits the cumulative probability of the model's next token predictions.\n\nValues: \n- Range: [0.0, 1.0]"
+	},
+	"n_parameter": {
+		"prefix": "n (OAIPy)",
+		"body": "n=${1:1},",
+		"description": "Specifies the number of responses to generate."
+	},
+	"stream_parameter": {
+		"prefix": "stream (OAIPy)",
+		"body": "stream=${1:false},",
+		"description": "Indicates whether to stream the output or retrieve the entire response at once.\n\nValues: \n- 'true': Enable streaming\n- 'false': Disable streaming"
+	},
+	"stop_parameter": {
+		"prefix": "stop (OAIPy)",
+		"body": "stop=\"${1}\",",
+		"description": "Specifies a stopping condition for the generated response. The model will stop generating tokens once it reaches the specified 'stop' value."
+	},
+	"max_tokens_parameter": {
+		"prefix": "max_tokens (OAIPy)",
+		"body": "max_tokens=${1:100},",
+		"description": "Limits the maximum number of tokens in the generated response."
+	},
+	"presence_penalty_parameter": {
+		"prefix": "presence_penalty (OAIPy)",
+		"body": "presence_penalty=${1:0},",
+		"description": "Controls the model's tendency to talk about specific topics.\n\nValues: \n- Range: [0.0, 1.0]"
+	},
+	"frequency_penalty_parameter": {
+		"prefix": "frequency_penalty (OAIPy)",
+		"body": "frequency_penalty=${1:0},",
+		"description": "Controls the model's preference for repeating similar responses.\n\nValues: \n- Range: [0.0, 1.0]"
+	},
+	"logit_bias_parameter": {
+		"prefix": "logit_bias (OAIPy)",
+		"body": "logit_bias=\"${1}\",",
+		"description": "Allows to bias the model's output towards a certain behavior or style.\n\nValues: A dictionary mapping token IDs to bias values. Example:\n\n```json\n{\"50256\": 2.0, \"50257\": -1.5}\n```"
+	}
+}
