@@ -1,55 +1,80 @@
 {
-	"SETUP_BASIC" : {
-		"prefix": "setup init basic (OAIPy)",
+	/* **************************************************************
+   ******************** INIT SETUP ************************** */
+	"OpenAI setup[basic]": {
+		"prefix": "import setup init basic",
 		"body": [
 			"import openai",
 			"",
-			"openai.api_key  = \"${1}\"",
+			"openai.api_key  = \"\"",
+			"",
+			"",
 		],
-		"description": "Get imports"
+		"description": "Basic import"
 	},
-
-	"SETUP_DOTENV" : {
-		"prefix": "setup init dotenv (OAIPy)",
+	"OpenAI setup[dotenv]": {
+		"prefix": "import setup init dotenv",
 		"body": [
+			"import os",
 			"import openai",
 			"from dotenv import load_dotenv, find_dotenv",
 			"",
-			"import os",
-			"",
 			"_ = load_dotenv(find_dotenv())",
 			"openai.api_key  = os.getenv('OPENAI_API_KEY')",
+			"",
+			"",
 		],
-		"description": "Get imports and secret key"
+		"description": "Imports and load env key"
 	},
-
-
+	"OpenAI setup[org]": {
+		"prefix": "import setup init org",
+		"body": [
+			"import os",
+			"import openai",
+			"from dotenv import load_dotenv, find_dotenv",
+			"",
+			"",
+			"_ = load_dotenv(find_dotenv())",
+			"openai.organization = \"YOUR_ORG_ID\"",
+			"openai.api_key  = os.getenv('OPENAI_API_KEY')",
+			"",
+			"",
+		],
+		"description": "Imports and load env key for ORG"
+	},
 	/* **************************************************************
-	******************** HELPER FUNCTIONS*************************** */
-	"TEXT_BASIC": {
-		"prefix": "def text completion basic (OAIPy) ",
+   ******************** HELPER FUNCTIONS*************************** */
+	"OpenAi txt. func.[basic]": {
+		"prefix": "def get text_completion() [base]",
 		"body": [
-			"def text_completion(model, prompt):",
+			"",
+			"# MODELS FOR TEXT COMPLETION",
+			"# text-davinci-003|text-davinci-002|text-curie-001|text-babbage-001|text-ada-001",
+			"def text_completion(prompt, model_name):",
 			"    response = openai.Completion.create(",
-			"        model=model,",
-			"        prompt=prompt",
-			"        max_tokens=50,",
+			"        model=model_name,",
+			"        prompt=prompt,",
 			"    )",
-			"    return response.choices[0].text.strip()"
+			"",
+			"    return response.choices[0].text.strip()",
+			"",
+			""
 		],
-		"description": "Get completion basic parameters for text models"
+		"description": "text completion (basic parameters) helper function"
 	},
-
-	"TEXT_FULL": {
-		"prefix": "def text completion full (OAIPy)",
+	"OpenAi txt. func.[full]": {
+		"prefix": "def get text_completion() [full]",
 		"body": [
-			"def text_completion():",
-			"    openai.Completion.create(",
-			"        model=\"\",",
-			"        prompt=\"\",",
+			"",
+			"# MODELS FOR TEXT COMPLETION",
+			"# text-davinci-003|text-davinci-002|text-curie-001|text-babbage-001|text-ada-001",
+			"def text_completion(prompt, model_name, randomness, tokens):",
+			"    response = openai.Completion.create(",
+			"        model=model_name,",
+			"        prompt=prompt,",
 			"        suffix=None,",
-			"        max_tokens=16,",
-			"        temperature=1,",
+			"        max_tokens=tokens,",
+			"        temperature=randomness,",
 			"        top_p=1,",
 			"        n=1,",
 			"        stream=False,",
@@ -60,141 +85,423 @@
 			"        frequency_penalty=0,",
 			"        best_of=1,",
 			"        logit_bias=None",
-			"    )"
+			"    )",
+			"",
+			"    return response.choices[0].text.strip()",
+			"",
+			""
 		],
-		"description": "Get completion full parameters for text models"
+		"description": "Text completion (full parameters) helper function"
 	},
-
-	"CHAT_BASIC": {
-		"prefix": "def chat completion basic (OAIPy) ",
+	"OpenAi Cht. func.[basic]": {
+		"prefix": "def get chat_completion() [base]",
 		"body": [
-			"def chat_completion():",
-			"    openai.ChatCompletion.create(",
-			"        model=\"\",",
-			"        messages=[]",
-			"    )"
+			"",
+			"# MODELS FOR CHAT COMPLETION:",
+			"# gpt-4|gpt-4-0314|gpt-4-32k|gpt-4-32k-0314|gpt-3.5-turbo|gpt-3.5-turbo-0301",
+			"def chat_completion(messages, model_name):",
+			"    response = openai.ChatCompletion.create(",
+			"        model=model_name,",
+			"        messages=messages",
+			"    )",
+			"",
+			"    return response.choices[0].message['content']",
+			"",
+			""
 		],
-		"description": "Get completion basic parameters for chat models"
+		"description": "Chat completion (basic parameters) helper function"
 	},
-
-	"CHAT_FULL": {
-		"prefix": "def chat completion full (OAIPy)",
+	"OpenAi Cht. func.[full]": {
+		"prefix": "def get chat_completion() [full]",
 		"body": [
-			"def chat_completion():",
-			"    openai.ChatCompletion.create(",
-			"        model=\"\",",
-			"        messages=[],",
-			"        temperature=1,",
+			"",
+			"# MODELS FOR CHAT COMPLETION:",
+			"# gpt-4|gpt-4-0314|gpt-4-32k|gpt-4-32k-0314|gpt-3.5-turbo|gpt-3.5-turbo-0301",
+			"def chat_completion(messages, model_name, randomness, tokens):",
+			"    response = openai.ChatCompletion.create(",
+			"        model=model_name,",
+			"        messages=messages,",
+			"        temperature=randomness,",
 			"        top_p=1,",
 			"        n=1,",
 			"        stream=False,",
 			"        stop=None,",
-			"        max_tokens=Infinity,",
+			"        max_tokens=tokens,",
 			"        presence_penalty=0,",
 			"        frequency_penalty=0,",
 			"        logit_bias=None",
-			"    )"
+			"    )",
+			"",
+			"    return response.choices[0].message['content']",
+			"",
+			""
 		],
-		"description": "Get completion full parameters for chat models"
+		"description": "Chat completion (full parameters) helper function"
 	},
-
-	"EDIT_BASIC": {
-		"prefix": "def edit completion basic (OAIPy) ",
+	"OpenAi Edt. func.[full]": {
+		"prefix": "def get text_edit() [full] ",
 		"body": [
-			"def edit_completion():",
-			"    openai.Completion.create(",
-			"        model=\"\",",
-			"        prompt=\"\",",
-			"        documents=None,",
-			"        file=None,",
-			"        max_tokens=16,",
-			"    )"
-		]
-	},
-
-	"EDIT_FULL": {
-		"prefix": "def edit completion full (OAIPy)",
-		"body": [
-			"def edit_completion():",
-			"    openai.Completion.create(",
-			"        model=\"\",",
-			"        prompt=\"\",",
-			"        documents=None,",
-			"        file=None,",
-			"        max_tokens=16,",
+			"",
+			"# MODELS FOR TEXT EDIT",
+			"# text-davinci-edit-001 | code-davinci-edit-001",
+			"def text_edit(instructions, text, model_name):",
+			"    response = openai.Edit.create(",
+			"        model=model_name,",
+			"        input=text,",
+			"        instruction=instructions,",
+			"        n=1,",
 			"        temperature=1,",
 			"        top_p=1,",
-			"        n=1,",
-			"        stream=False,",
-			"        logprobs=None,",
-			"        stop=None,",
-			"        logit_bias=None,",
-			"        return_prompt=False,",
-			"        return_completion=False,",
-			"        expand=False,",
-			"        include_logprobs=None,",
-			"        return_tokens=False,",
-			"        return_full_text=False",
-			"    )"
+			"    )",
+			"",
+			"    return response.choices[0].text.strip()",
+			"",
+			""
 		],
-		"description": "Get completion for complex edit models"
+		"description": "Edit helper function"
 	},
-
 	/* **************************************************************
-	************************ PARAMETERS *************************** */
-	"model_parameter": {
-		"prefix": "model (OAIPy)",
-		"body": "model=\"${1}\",",
+   ************************ PARAMETERS *************************** */
+	"OpenAI Parameter[model]": {
+		"prefix": "model= [parameter]",
+		"body": "model=\"\",",
 		"description": "Specifies the GPT model to be used.\n\nEg. values: \n- 'gpt-3.5-turbo': GPT-3.5 Turbo model\n- 'text-davinci-003': Text Davinci 003 model\n- 'curie': Curie model\n- 'babbage': Babbage model\n- 'davinci': Davinci model"
 	},
-	"messages_parameter": {
-		"prefix": "messages (OAIPy)",
-		"body": "messages=[${1}],",
+	"OpenAI Parameter[prompt]": {
+		"prefix": "prompt= [parameter]",
+		"body": "prompt=\"\",",
+		"description": "Specifies the GPT model to be used.\n\nEg. values: \n- 'gpt-3.5-turbo': GPT-3.5 Turbo model\n- 'text-davinci-003': Text Davinci 003 model\n- 'curie': Curie model\n- 'babbage': Babbage model\n- 'davinci': Davinci model"
+	},
+	"OpenAI Parameter[messages]": {
+		"prefix": "messages= [parameter]",
+		"body": [
+			"messages=[",
+			"    {\"role\" : \"\", \"content\": \"\" }",
+			"],"
+		],
 		"description": "A list of messages exchanged in a conversation for the model to generate a response based on the conversation history.\n\nValues: A list of message objects, where each object contains 'role' and 'content' properties. Example:\n\n[\n  { \"role\": \"system\", \"content\": \"You are a helpful assistant.\" },\n  { \"role\": \"user\", \"content\": \"What's the weather like today?\" }\n]\n\n"
 	},
-	"temperature_parameter": {
-		"prefix": "temperature (OAIPy)",
-		"body": "temperature=${1:1},",
-		"description": "Controls the randomness of the generated output. Higher values (e.g., 1.0) make the output more random, while lower values (e.g., 0.2) make it more focused and deterministic."
+	"OpenAI Parameter[suffix]": {
+		"prefix": "suffix= [parameter]",
+		"body": "suffix=None",
+		"description": "The suffix that comes after a completion of inserted text."
 	},
-	"top_p_parameter": {
-		"prefix": "top_p (OAIPy)",
-		"body": "top_p=${1:1},",
-		"description": "Controls the diversity of the generated output. It limits the cumulative probability of the model's next token predictions.\n\nValues: \n- Range: [0.0, 1.0]"
-	},
-	"n_parameter": {
-		"prefix": "n (OAIPy)",
-		"body": "n=${1:1},",
-		"description": "Specifies the number of responses to generate."
-	},
-	"stream_parameter": {
-		"prefix": "stream (OAIPy)",
-		"body": "stream=${1:false},",
-		"description": "Indicates whether to stream the output or retrieve the entire response at once.\n\nValues: \n- 'true': Enable streaming\n- 'false': Disable streaming"
-	},
-	"stop_parameter": {
-		"prefix": "stop (OAIPy)",
-		"body": "stop=\"${1}\",",
-		"description": "Specifies a stopping condition for the generated response. The model will stop generating tokens once it reaches the specified 'stop' value."
-	},
-	"max_tokens_parameter": {
-		"prefix": "max_tokens (OAIPy)",
-		"body": "max_tokens=${1:100},",
+	"OpenAI Parameter[max_tokens]": {
+		"prefix": "max_tokens= [parameter]",
+		"body": "max_tokens=16,",
 		"description": "Limits the maximum number of tokens in the generated response."
 	},
-	"presence_penalty_parameter": {
-		"prefix": "presence_penalty (OAIPy)",
-		"body": "presence_penalty=${1:0},",
+	"OpenAI Parameter[temperature]": {
+		"prefix": "temperature= [parameter]",
+		"body": "temperature=1,",
+		"description": "Controls the randomness of the generated output. Higher values (e.g., 1.0) make the output more random, while lower values (e.g., 0.2) make it more focused and deterministic."
+	},
+	"OpenAI Parameter[top_p]": {
+		"prefix": "top_p= [parameter]",
+		"body": "top_p=1,",
+		"description": "Controls the diversity of the generated output. It limits the cumulative probability of the model's next token predictions.\n\nValues: \n- Range: [0.0, 1.0]"
+	},
+	"OpenAI Parameter[n]": {
+		"prefix": "n= [parameter]",
+		"body": "n=1,",
+		"description": "Specifies the number of responses to generate."
+	},
+	"OpenAI Parameter[stream]": {
+		"prefix": "stream= [parameter]",
+		"body": "stream=False,",
+		"description": "Indicates whether to stream the output or retrieve the entire response at once.\n\nValues: \n- 'true': Enable streaming\n- 'false': Disable streaming"
+	},
+	"OpenAI Parameter[logprobs]": {
+		"prefix": "logprobs= [parameter]",
+		"body": "logprobs=None",
+		"description": "Include the log probabilities on the logprobs most likely tokens, as well the chosen tokens",
+	},
+	"OpenAI Parameter[echo]": {
+		"prefix": "echo= [parameter]",
+		"body": "echo=False",
+		"description": "Echo back the prompt in addition to the completion"
+	},
+	"OpenAI Parameter[stop]": {
+		"prefix": "stop= [parameter]",
+		"body": "stop=None,",
+		"description": "Specifies a stopping condition for the generated response. The model will stop generating tokens once it reaches the specified 'stop' value."
+	},
+	"OpenAI Parameter[presence_penalty]": {
+		"prefix": "presence_penalty= [parameter]",
+		"body": "presence_penalty=0,",
 		"description": "Controls the model's tendency to talk about specific topics.\n\nValues: \n- Range: [0.0, 1.0]"
 	},
-	"frequency_penalty_parameter": {
-		"prefix": "frequency_penalty (OAIPy)",
-		"body": "frequency_penalty=${1:0},",
+	"OpenAI Parameter[frequency_penalty]": {
+		"prefix": "frequency_penalty= [parameter]",
+		"body": "frequency_penalty=0,",
 		"description": "Controls the model's preference for repeating similar responses.\n\nValues: \n- Range: [0.0, 1.0]"
 	},
-	"logit_bias_parameter": {
-		"prefix": "logit_bias (OAIPy)",
-		"body": "logit_bias=\"${1}\",",
+	"OpenAI Parameter[best_of]": {
+		"prefix": "best_of= [parameter]",
+		"body": "best_of=1",
+		"description": "Generates best_of completions server-side and returns the \"best\" (the one with the highest log probability per token). Results cannot be streamed."
+	},
+	"OpenAI Parameter[logit_bias]": {
+		"prefix": "logit_bias= [parameter]",
+		"body": "logit_bias=None,",
 		"description": "Allows to bias the model's output towards a certain behavior or style.\n\nValues: A dictionary mapping token IDs to bias values. Example:\n\n```json\n{\"50256\": 2.0, \"50257\": -1.5}\n```"
+	},
+	"OpenAI Parameter[user]": {
+		"prefix": "user [parameter]",
+		"body": "user",
+		"description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. Learn more."
+	},
+	"OpenAI Message{role|content}": {
+		"prefix": "role",
+		"body": "\"role\" : \"\", \"content\" : \"\"",
+		"description": "message=[{'role' : '', 'content' : ''}]"
+	},
+	/* **************************************************************
+   ************************ PARAMETERS CLEAN ********************** */
+	"OpenAI model": {
+		"prefix": "model",
+		"body": "model",
+		"description": "OpenAI model"
+	},
+	"OpenAI prompt": {
+		"prefix": "prompt",
+		"body": "prompt",
+		"description": "Text prompt"
+	},
+	"OpenAI messages": {
+		"prefix": "messages",
+		"body": "messages",
+		"description": "Text message"
+	},
+	"OpenAI suffix": {
+		"prefix": "suffix",
+		"body": "suffix",
+		"description": "Text suffix"
+	},
+	"OpenAI max_tokens": {
+		"prefix": "max_tokens",
+		"body": "max_tokens",
+		"description": "Maximum tokens"
+	},
+	"OpenAI temperature": {
+		"prefix": "temperature",
+		"body": "temperature",
+		"description": "Temperature value"
+	},
+	"OpenAI top_p": {
+		"prefix": "top_p",
+		"body": "top_p",
+		"description": "Top-p value"
+	},
+	"OpenAI n": {
+		"prefix": "n",
+		"body": "n",
+		"description": "Number"
+	},
+	"OpenAI stream": {
+		"prefix": "stream",
+		"body": "stream",
+		"description": "Stream value"
+	},
+	"OpenAI logprobs": {
+		"prefix": "logprobs",
+		"body": "logprobs",
+		"description": "Log probabilities"
+	},
+	"OpenAI echo": {
+		"prefix": "echo",
+		"body": "echo",
+		"description": "Echo value"
+	},
+	"OpenAI presence_penalty": {
+		"prefix": "presence_penalty",
+		"body": "presence_penalty",
+		"description": "Presence penalty"
+	},
+	"OpenAI frequency_penalty": {
+		"prefix": "frequency_penalty",
+		"body": "frequency_penalty",
+		"description": "Frequency penalty"
+	},
+	"OpenAI best_of": {
+		"prefix": "best_of",
+		"body": "best_of",
+		"description": "Best of"
+	},
+	"OpenAI logit_bias": {
+		"prefix": "logit_bias",
+		"body": "logit_bias",
+		"description": "Logit bias"
+	},
+	"OpenAI user": {
+		"prefix": "user",
+		"body": "user",
+		"description": "User"
+	},
+	"OpenAI role": {
+		"prefix": "role",
+		"body": "role",
+		"description": "Role"
+	},
+	"OpenAI content": {
+		"prefix": "content",
+		"body": "content",
+		"description": "Content"
+	},
+	/* **************************************************************
+   	************************ FRAGMENTS *************************** */
+	"OpenAI Function clean": {
+		"prefix": "def get_completion() [clean]",
+		"body": [
+			"",
+			"def get_completion():",
+			"    # your code",
+			"    return",
+			"",
+			""
+		],
+		"description": "Get OpenAI model list"
+	},
+	"OpenAI models": {
+		"prefix": "openai.Model.list()",
+		"body": [
+			"openai.Model.list()"
+		],
+		"description": "Get OpenAI model list"
+	},
+	"OpenAI API Key": {
+		"prefix": "openai.api_key =",
+		"body": [
+			"openai.api_key = "
+		],
+		"description": "Set OpenAI API key"
+	},
+	"OpenAI Model retrieve": {
+		"prefix": "openai.Model.retrieve()",
+		"body": [
+			"openai.Model.retrieve()"
+		],
+		"description": "Retrieve an OpenAI model"
+	},
+	// completions and edit
+	"OpenAI Completion create": {
+		"prefix": "openai.Completion.create()",
+		"body": [
+			"openai.Completion.create()"
+		],
+		"description": "Create an OpenAI completion"
+	},
+	"OpenAI ChatCompletion create": {
+		"prefix": "openai.ChatCompletion.create()",
+		"body": [
+			"openai.ChatCompletion.create()"
+		],
+		"description": "Create an OpenAI chat completion"
+	},
+	"OpenAI Edit create": {
+		"prefix": "openai.Edit.create()",
+		"body": [
+			"openai.Edit.create()"
+		],
+		"description": "Create an OpenAI edit"
+	},
+	// response
+	"OpenAI Choices - First Choice Message": {
+		"prefix": "choices[0].message",
+		"body": [
+			"choices[0].message"
+		],
+		"description": "Access the message of the first choice in OpenAI choices"
+	},
+	"OpenAI Choices - First Choice Message Content": {
+		"prefix": "choices[0].message['content']",
+		"body": [
+			"choices[0].message['content']"
+		],
+		"description": "Access the content of the message in the first choice of OpenAI choices"
+	},
+	"OpenAI Choices - First Choice Text": {
+		"prefix": "choices[0].text",
+		"body": [
+			"choices[0].text"
+		],
+		"description": "Access the text of the first choice in OpenAI choices"
+	},
+	"OpenAI Choices - First Choice Text Split": {
+		"prefix": "choices[0].text.split()",
+		"body": [
+			"choices[0].text.split()"
+		],
+		"description": "Split the text of the first choice in OpenAI choices"
+	},
+	/* **************************************************************
+   	************************ OPENAI MODELS *************************** */
+	// Chat Completion Models
+	"OpenAI GPT-4": {
+		"prefix": "gpt-4 [chat model]",
+		"body": "\"gpt-4\"",
+		"description": "Chat completion model - GPT-4. Advanced language model for generating human-like text in chat-based scenarios."
+	},
+	"OpenAI GPT-4 (0314)": {
+		"prefix": "gpt-4-0314 [chat model]",
+		"body": "\"gpt-4-0314\"",
+		"description": "Chat completion model - GPT-4 (0314). Upgraded version of GPT-4 trained with data from March 2014."
+	},
+	"OpenAI GPT-4 (32k)": {
+		"prefix": "gpt-4-32k [chat model]",
+		"body": "\"gpt-4-32k\"",
+		"description": "Chat completion model - GPT-4 (32k). Variant of GPT-4 with a vocabulary size of 32,000 tokens."
+	},
+	"OpenAI GPT-4 (32k, 0314)": {
+		"prefix": "gpt-4-32k-0314 [chat model]",
+		"body": "\"gpt-4-32k-0314\"",
+		"description": "Chat completion model - GPT-4 (32k, 0314). Variant of GPT-4 with a vocabulary size of 32,000 tokens, trained with data from March 2014."
+	},
+	"OpenAI GPT-3.5 Turbo": {
+		"prefix": "gpt-3.5-turbo [chat model]",
+		"body": "\"gpt-3.5-turbo\"",
+		"description": "Chat completion model - GPT-3.5 Turbo. Highly capable language model for chat-based applications, offering improved performance over previous versions."
+	},
+	"OpenAI GPT-3.5 Turbo (0301)": {
+		"prefix": "gpt-3.5-turbo-0301 [chat model]",
+		"body": "\"gpt-3.5-turbo-0301\"",
+		"description": "Chat completion model - GPT-3.5 Turbo (0301). Variant of GPT-3.5 Turbo trained with data from March 2021."
+	},
+	// Completion Models
+	"OpenAI Text Davinci (003)": {
+		"prefix": "text-davinci-003 [text model]",
+		"body": "\"text-davinci-003\"",
+		"description": "Completion model - Text Davinci (003). General-purpose language model for generating high-quality text in a wide range of contexts."
+	},
+	"OpenAI Text Davinci (002)": {
+		"prefix": "text-davinci-002 [text model]",
+		"body": "\"text-davinci-002\"",
+		"description": "Completion model - Text Davinci (002). Variant of Text Davinci offering similar capabilities with minor differences."
+	},
+	"OpenAI Text Curie (001)": {
+		"prefix": "text-curie-001 [text model]",
+		"body": "\"text-curie-001\"",
+		"description": "Completion model - Text Curie (001). Powerful language model for generating text, designed for various creative and informative tasks."
+	},
+	"OpenAI Text Babbage (001)": {
+		"prefix": "text-babbage-001 [text model]",
+		"body": "\"text-babbage-001\"",
+		"description": "Completion model - Text Babbage (001). Language model focused on generating text with specific prompts and instructions."
+	},
+	"OpenAI Text Ada (001)": {
+		"prefix": "text-ada-001 [text model]",
+		"body": "\"text-ada-001\"",
+		"description": "Completion model - Text Ada (001). Language model designed for specific use cases and industries, offering specialized text generation capabilities."
+	},
+	// Edit Models
+	"OpenAI Text Davinci Edit (001)": {
+		"prefix": "text-davinci-edit-001 [edit model]",
+		"body": "\"text-davinci-edit-001\"",
+		"description": "Edit model - Text Davinci Edit (001). Language model optimized for assisting in editing and improving text, providing helpful suggestions and corrections."
+	},
+	"OpenAI Code Davinci Edit (001)": {
+		"prefix": "code-davinci-edit-001 [edit model]",
+		"body": "\"code-davinci-edit-001\"",
+		"description": "Edit model - Code Davinci Edit (001). Language model specialized in assisting with code editing tasks, offering suggestions and enhancements for programming languages."
 	}
 }
