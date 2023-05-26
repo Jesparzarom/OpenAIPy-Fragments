@@ -4,12 +4,20 @@
   "description": "Simplify your coding with ready-to-use Python snippets for OpenAI library.",
   "version": "1.0.0",
   "publisher": "Jesparzarom",
+  "author": {
+    "name": "Juan E."
+  },
   "engines": {
     "vscode": "^1.78.0"
   },
   "categories": [
     "Snippets"
   ],
+  "icon": "demos/OpenAiPy.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Jesparzarom/OpenAIPy-Fragments.git"
@@ -21,5 +29,10 @@
         "path": "./snippets/snippets.code-snippets"
       }
     ]
-  }
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Jesparzarom/OpenAIPy-fragments/issues"
+  },
+  "homepage": "https://github.com/Jesparzarom/OpenAIPy-Fragments/blob/main/README.md"
 }
