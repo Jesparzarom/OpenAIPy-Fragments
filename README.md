@@ -11,7 +11,7 @@
 
 
 
-This is the README for the OpenAIPy Fragments extension, which provides helpful code snippets for developing with the OpenAI library.
+This is the README for the OpenAIPy Fragments extension, which provides helpful code snippets for developing with the OpenAI library in Python (openai-python).
 
 # Usage 
 ## ✨ Features
@@ -197,7 +197,7 @@ pip install python-dotenv
 
 ## Known Issues
 
-Please report any issues you encounter by creating a new [issue](https://github.com/your-repo-name/issues) in this repository. We appreciate your feedback and contributions to help improve this project.
+Please report any issues you encounter by creating a new [issue](https://github.com/Jesparzarom/OpenAIPy-fragments/issues) in this repository. We appreciate your feedback and contributions to help improve this project.
 
 If you have any questions or need assistance, feel free to reach out by opening an issue. Thank you for your support!
 
