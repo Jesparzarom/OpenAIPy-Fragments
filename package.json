@@ -3,6 +3,7 @@
   "displayName": "OpenAIPY Fragments IntelliSense",
   "description": "Simplify your coding with ready-to-use Python snippets for OpenAI library.",
   "version": "1.0.0",
+  "publisher": "Jesparzarom",
   "engines": {
     "vscode": "^1.78.0"
   },
