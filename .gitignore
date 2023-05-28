@@ -1,2 +1,22 @@
-node_modules
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode
+
+### VisualStudioCode ###
+.vscode
+.vscodeignore
+
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
 *.vsix
+node_modules
+.eslintrc.js
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
