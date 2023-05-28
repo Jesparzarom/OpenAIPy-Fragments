@@ -1,14 +1,17 @@
-# OpenAIPy Fragments
-
-<!-- ![Versión](https://img.shields.io/visual-studio-marketplace/v/{publisher}.{extension-id}?color=green&style=flat)
-![Descargas](https://img.shields.io/visual-studio-marketplace/d/{publisher}.{extension-id}?color=blue&style=flat)
-![Instalaciones](https://img.shields.io/visual-studio-marketplace/i/{publisher}.{extension-id}?color=blue&style=flat) -->
-![OpenAIPy](https://img.shields.io/badge/OpenAIPy-4D8FFD?style=square)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-FF66C4?style=flat)](https://openai.com/)
+[![GitHub stars](https://img.shields.io/github/stars/Jesparzarom/OpenAIPy-Fragments.svg?style=social&label=Stars)](https://github.com/Jesparzarom/OpenAIPy-Fragments/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Jesparzarom/OpenAIPy-Fragments.svg?style=social&label=Forks)](https://github.com/Jesparzarom/OpenAIPy-Fragments/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/Jesparzarom/OpenAIPy-Fragments.svg?style=social&label=Watchers)](https://github.com/Jesparzarom/OpenAIPy-Fragments)
+[![GitHub issues](https://img.shields.io/github/issues/Jesparzarom/OpenAIPy-Fragments.svg)](https://github.com/Jesparzarom/OpenAIPy-Fragments/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/Jesparzarom/OpenAIPy-Fragments.svg)](https://github.com/Jesparzarom/OpenAIPy-Fragments/pulls)
 
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/Jesparzarom.openaipy-fragments.svg?label=Installs&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Jesparzarom.openaipy-fragments)
+[![Rating](https://img.shields.io/visual-studio-marketplace/stars/Jesparzarom.openaipy-fragments.svg?label=Rating&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Jesparzarom.openaipy-fragments)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/Jesparzarom.openaipy-fragments.svg?label=Downloads&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Jesparzarom.openaipy-fragments)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/Jesparzarom.openaipy-fragments.svg?label=Version&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Jesparzarom.openaipy-fragments)
 
-
+# OpenAIPy Fragments
 
 
 This is the README for the OpenAIPy Fragments extension, which provides helpful code snippets for developing with the OpenAI library in Python (openai-python).
@@ -76,7 +79,7 @@ Additional notes:
 ### **◼ Models**
 To specify the model, use the following keywords:
  
-- For text model options, use `chatmodel`.
+- For text model options, use `textmodel`.
 - For chat model options, use `chatmodel`.
 - For editing model options, use `editmodel`.
 
@@ -185,7 +188,7 @@ By using these keywords, you will be presented with the relevant model options t
 ## 📢 Requirements
 
 - `openai-python` library (Required)
-```cmd
+```bash
 pip install openai-python
 ```
 - `python-dotenv` module (Recommended)
