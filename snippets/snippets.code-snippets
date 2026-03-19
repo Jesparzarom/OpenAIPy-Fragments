@@ -1,189 +1,613 @@
 {
-	"OpenAI Client Setup": {
-		"prefix": "oai-init",
-		"body": [
-			"import os",
-			"from openai import OpenAI",
-			"",
-			"client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))",
-			""
-		],
-		"description": "Initialize OpenAI Client v1.0+"
-	},
-	"OpenAI Chat Completion (Quick)": {
-		"prefix": "oai-chat",
-		"body": [
-			"response = client.chat.completions.create(",
-			"    model=\"${1:gpt-4o}\",",
-			"    messages=[",
-			"        {\"role\": \"system\", \"content\": \"${2:You are a helpful assistant.}\"},",
-			"        {\"role\": \"user\", \"content\": \"${3:Your prompt here}\"}",
-			"    ]",
-			")",
-			"print(response.choices[0].message.content)",
-			""
-		],
-		"description": "Quick Chat Completion block"
-	},
-	"OpenAI Chat Completion (Streaming)": {
-		"prefix": "oai-stream",
-		"body": [
-			"stream = client.chat.completions.create(",
-			"    model=\"${1:gpt-4o}\",",
-			"    messages=[{\"role\": \"user\", \"content\": \"${2:Your prompt here}\"}],",
-			"    stream=True,",
-			")",
-			"for chunk in stream:",
-			"    if chunk.choices[0].delta.content is not None:",
-			"        print(chunk.choices[0].delta.content, end=\"\")",
-			""
-		],
-		"description": "Chat Completion with Streaming response"
-	},
-	"OpenAI Chat Completion (JSON Mode)": {
-		"prefix": "oai-json",
-		"body": [
-			"response = client.chat.completions.create(",
-			"    model=\"${1:gpt-4o}\",",
-			"    response_format={ \"type\": \"json_object\" },",
-			"    messages=[",
-			"        {\"role\": \"system\", \"content\": \"You are a helpful assistant designed to output JSON.\"}",
-			"        {\"role\": \"user\", \"content\": \"${2:Your prompt asking for JSON}\"}",
-			"    ]",
-			")",
-			"print(response.choices[0].message.content)",
-			""
-		],
-		"description": "Chat Completion forced to return valid JSON"
-	},
-	"OpenAI Generate Image (DALL-E 3)": {
-		"prefix": "oai-image",
-		"body": [
-			"response = client.images.generate(",
-			"    model=\"dall-e-3\",",
-			"    prompt=\"${1:A cute baby sea otter}\",",
-			"    size=\"1024x1024\",",
-			"    quality=\"standard\",",
-			"    n=1,",
-			")",
-			"image_url = response.data[0].url",
-			"print(image_url)",
-			""
-		],
-		"description": "Generate an image using DALL-E 3"
-	},
-	"OpenAI Audio Transcription (Whisper)": {
-		"prefix": "oai-audio",
-		"body": [
-			"audio_file = open(\"${1:audio.mp3}\", \"rb\")",
-			"transcript = client.audio.transcriptions.create(",
-			"    model=\"whisper-1\",",
-			"    file=audio_file",
-			")",
-			"print(transcript.text)",
-			""
-		],
-		"description": "Transcribe audio file using Whisper"
-	},
-	"OpenAI Generate Embeddings": {
-		"prefix": "oai-embed",
-		"body": [
-			"response = client.embeddings.create(",
-			"    input=\"${1:Your text string goes here}\",",
-			"    model=\"text-embedding-3-small\"",
-			")",
-			"print(response.data[0].embedding)",
-			""
-		],
-		"description": "Generate vector embeddings for text"
-	},
-	"OpenAI Helper Function": {
-		"prefix": "oai-func",
-		"body": [
-			"def get_completion(prompt, model=\"gpt-4o\"):",
-			"    response = client.chat.completions.create(",
-			"        model=model,",
-			"        messages=[{\"role\": \"user\", \"content\": prompt}]",
-			"    )",
-			"    return response.choices[0].message.content",
-			"",
-			""
-		],
-		"description": "Ready-to-use helper function for chat completions"
-	},
-	"OpenAI Messages Array": {
-		"prefix": "oai-messages",
-		"body": [
-			"messages=[",
-			"    {\"role\": \"system\", \"content\": \"${1:Context setup}\"},",
-			"    {\"role\": \"user\", \"content\": \"${2:User input}\"}",
-			"]"
-		],
-		"description": "Standard messages array structure"
-	},
-	"OpenAI Model: o1-preview": {
-		"prefix": "oai-o1-preview",
-		"body": "\"o1-preview\"",
-		"description": "Reasoning Model: o1-preview (Complex tasks)"
-	},
-	"OpenAI Model: o1-mini": {
-		"prefix": "oai-o1-mini",
-		"body": "\"o1-mini\"",
-		"description": "Reasoning Model: o1-mini (Faster, cost-effective reasoning)"
-	},
-	"OpenAI Model: GPT-4o": {
-		"prefix": "oai-gpt4o",
-		"body": "\"gpt-4o\"",
-		"description": "Model: gpt-4o (Fastest and most capable)"
-	},
-	"OpenAI Model: GPT-4o-mini": {
-		"prefix": "oai-gpt4o-mini",
-		"body": "\"gpt-4o-mini\"",
-		"description": "Model: gpt-4o-mini (Replaces 3.5 Turbo, cheaper and smarter)"
-	},
-	"OpenAI Model: Text Embedding 3 Small": {
-		"prefix": "oai-emb-small",
-		"body": "\"text-embedding-3-small\"",
-		"description": "Embedding Model: text-embedding-3-small"
-	},
-	"OpenAI Model: Text Embedding 3 Large": {
-		"prefix": "oai-emb-large",
-		"body": "\"text-embedding-3-large\"",
-		"description": "Embedding Model: text-embedding-3-large"
-	},
-	"OpenAI Custom Client (Groq, Ollama, DeepSeek)": {
-		"prefix": "oai-init-custom",
-		"body": [
-			"import os",
-			"from openai import OpenAI",
-			"",
-			"client = OpenAI(",
-			"    base_url=\"${1:https://api.groq.com/openai/v1}\",",
-			"    api_key=os.environ.get('${2:GROQ_API_KEY}')",
-			")",
-			""
-		],
-		"description": "Initialize Client for OpenAI-compatible APIs (Groq, Ollama, Together, DeepSeek)"
-	},
-	"OpenAI Compatible Model: Llama 3 (Groq)": {
-		"prefix": "oai-llama3-groq",
-		"body": "\"llama3-70b-8192\"",
-		"description": "Model: Meta Llama 3 70B (via Groq)"
-	},
-	"OpenAI Compatible Model: Mixtral (Groq)": {
-		"prefix": "oai-mixtral-groq",
-		"body": "\"mixtral-8x7b-32768\"",
-		"description": "Model: Mixtral 8x7B (via Groq)"
-	},
-	"OpenAI Compatible Model: DeepSeek Coder": {
-		"prefix": "oai-deepseek-coder",
-		"body": "\"deepseek-coder\"",
-		"description": "Model: DeepSeek Coder API"
-	},
-	"OpenAI Compatible Model: Local Llama 3 (Ollama)": {
-		"prefix": "oai-ollama-llama3",
-		"body": "\"llama3\"",
-		"description": "Model: Local Llama 3 via Ollama (requires base_url='http://localhost:11434/v1')"
-	}
+  // ─────────────────────────────────────────────
+  //  SETUP & CLIENT
+  // ─────────────────────────────────────────────
 
+  "OpenAI: Init client": {
+    "prefix": "oai-init",
+    "body": [
+      "import os",
+      "from openai import OpenAI",
+      "",
+      "client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))",
+      ""
+    ],
+    "description": "Cliente OpenAI estándar"
+  },
+
+  "OpenAI: Init client (dotenv)": {
+    "prefix": "oai-init-dotenv",
+    "body": [
+      "import os",
+      "from openai import OpenAI",
+      "from dotenv import load_dotenv",
+      "",
+      "load_dotenv()",
+      "client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))",
+      ""
+    ],
+    "description": "Cliente OpenAI con dotenv"
+  },
+
+  "OpenAI: Init client (compatible - Groq / DeepSeek / Ollama / xAI)": {
+    "prefix": "oai-init-compat",
+    "body": [
+      "import os",
+      "from openai import OpenAI",
+      "",
+      "client = OpenAI(",
+      "    base_url=\"${1:https://api.groq.com/openai/v1}\",",
+      "    api_key=os.environ.get('${2:GROQ_API_KEY}')",
+      ")",
+      ""
+    ],
+    "description": "Cliente para APIs compatibles con OpenAI (Groq, DeepSeek, xAI, Ollama, etc.)"
+  },
+
+  "OpenAI: Async client": {
+    "prefix": "oai-init-async",
+    "body": [
+      "import os",
+      "import asyncio",
+      "from openai import AsyncOpenAI",
+      "",
+      "client = AsyncOpenAI(api_key=os.environ.get('OPENAI_API_KEY'))",
+      ""
+    ],
+    "description": "Cliente asíncrono de OpenAI"
+  },
+
+  "OpenAI: .env boilerplate": {
+    "prefix": "oai-dotenv",
+    "body": [
+      "OPENAI_API_KEY=sk-${1:your-key-here}",
+      "# GROQ_API_KEY=",
+      "# DEEPSEEK_API_KEY=",
+      "# XAI_API_KEY=",
+      ""
+    ],
+    "description": "Archivo .env base para proyectos OpenAI"
+  },
+
+  // ─────────────────────────────────────────────
+  //  CHAT COMPLETIONS
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Chat completion": {
+    "prefix": "oai-chat",
+    "body": [
+      "response = client.chat.completions.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    messages=[",
+      "        {\"role\": \"system\", \"content\": \"${2:You are a helpful assistant.}\"},",
+      "        {\"role\": \"user\", \"content\": \"${3:Your prompt here}\"}",
+      "    ]",
+      ")",
+      "print(response.choices[0].message.content)",
+      ""
+    ],
+    "description": "Chat completion básico"
+  },
+
+  "OpenAI: Chat completion (streaming)": {
+    "prefix": "oai-stream",
+    "body": [
+      "stream = client.chat.completions.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    messages=[{\"role\": \"user\", \"content\": \"${2:Your prompt here}\"}],",
+      "    stream=True,",
+      ")",
+      "for chunk in stream:",
+      "    if chunk.choices[0].delta.content is not None:",
+      "        print(chunk.choices[0].delta.content, end=\"\", flush=True)",
+      ""
+    ],
+    "description": "Chat completion con streaming"
+  },
+
+  "OpenAI: Chat completion (JSON mode)": {
+    "prefix": "oai-json",
+    "body": [
+      "response = client.chat.completions.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    response_format={\"type\": \"json_object\"},",
+      "    messages=[",
+      "        {\"role\": \"system\", \"content\": \"You are a helpful assistant that responds only in JSON.\"},",
+      "        {\"role\": \"user\", \"content\": \"${2:Your prompt asking for JSON}\"}",
+      "    ]",
+      ")",
+      "import json",
+      "data = json.loads(response.choices[0].message.content)",
+      "print(data)",
+      ""
+    ],
+    "description": "Chat completion forzado a JSON"
+  },
+
+  "OpenAI: Chat completion (with reasoning effort)": {
+    "prefix": "oai-reasoning",
+    "body": [
+      "response = client.chat.completions.create(",
+      "    model=\"${1:gpt-5.4}\",",
+      "    reasoning_effort=\"${2|none,low,medium,high,xhigh|}\",",
+      "    messages=[",
+      "        {\"role\": \"user\", \"content\": \"${3:Your prompt here}\"}",
+      "    ]",
+      ")",
+      "print(response.choices[0].message.content)",
+      ""
+    ],
+    "description": "Chat con reasoning effort (gpt-5.x, o3)"
+  },
+
+  // ─────────────────────────────────────────────
+  //  STRUCTURED OUTPUTS
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Structured Output (Pydantic)": {
+    "prefix": "oai-structured",
+    "body": [
+      "from pydantic import BaseModel",
+      "",
+      "class ${1:ResponseModel}(BaseModel):",
+      "    ${2:field}: ${3:str}",
+      "",
+      "completion = client.beta.chat.completions.parse(",
+      "    model=\"${4:gpt-5.4-mini}\",",
+      "    messages=[",
+      "        {\"role\": \"system\", \"content\": \"${5:Extract the information.}\"},",
+      "        {\"role\": \"user\", \"content\": \"${6:Input text}\"},",
+      "    ],",
+      "    response_format=${1:ResponseModel},",
+      ")",
+      "result = completion.choices[0].message.parsed",
+      "print(result)",
+      ""
+    ],
+    "description": "Output estructurado con validación Pydantic (beta.chat.completions.parse)"
+  },
+
+  // ─────────────────────────────────────────────
+  //  VISION / MULTIMODAL
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Vision (image URL)": {
+    "prefix": "oai-vision",
+    "body": [
+      "response = client.chat.completions.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    messages=[",
+      "        {",
+      "            \"role\": \"user\",",
+      "            \"content\": [",
+      "                {\"type\": \"text\", \"text\": \"${2:What do you see in this image?}\"},",
+      "                {",
+      "                    \"type\": \"image_url\",",
+      "                    \"image_url\": {\"url\": \"${3:https://example.com/image.jpg}\"},",
+      "                },",
+      "            ],",
+      "        }",
+      "    ],",
+      ")",
+      "print(response.choices[0].message.content)",
+      ""
+    ],
+    "description": "Análisis de imagen via URL"
+  },
+
+  "OpenAI: Vision (base64 local file)": {
+    "prefix": "oai-vision-b64",
+    "body": [
+      "import base64",
+      "",
+      "with open(\"${1:image.jpg}\", \"rb\") as f:",
+      "    image_data = base64.b64encode(f.read()).decode(\"utf-8\")",
+      "",
+      "response = client.chat.completions.create(",
+      "    model=\"${2:gpt-5.4-mini}\",",
+      "    messages=[",
+      "        {",
+      "            \"role\": \"user\",",
+      "            \"content\": [",
+      "                {\"type\": \"text\", \"text\": \"${3:What do you see in this image?}\"},",
+      "                {",
+      "                    \"type\": \"image_url\",",
+      "                    \"image_url\": {\"url\": f\"data:image/${4|jpeg,png,gif,webp|};base64,{image_data}\"},",
+      "                },",
+      "            ],",
+      "        }",
+      "    ],",
+      ")",
+      "print(response.choices[0].message.content)",
+      ""
+    ],
+    "description": "Análisis de imagen local codificada en base64"
+  },
+
+  // ─────────────────────────────────────────────
+  //  TOOL CALLING
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Tool Calling (definition + call)": {
+    "prefix": "oai-tools",
+    "body": [
+      "import json",
+      "",
+      "tools = [",
+      "    {",
+      "        \"type\": \"function\",",
+      "        \"function\": {",
+      "            \"name\": \"${1:function_name}\",",
+      "            \"description\": \"${2:What this function does}\",",
+      "            \"parameters\": {",
+      "                \"type\": \"object\",",
+      "                \"properties\": {",
+      "                    \"${3:param}\": {",
+      "                        \"type\": \"string\",",
+      "                        \"description\": \"${4:Parameter description}\"",
+      "                    }",
+      "                },",
+      "                \"required\": [\"${3:param}\"],",
+      "            },",
+      "        },",
+      "    }",
+      "]",
+      "",
+      "response = client.chat.completions.create(",
+      "    model=\"${5:gpt-5.4-mini}\",",
+      "    messages=[{\"role\": \"user\", \"content\": \"${6:Prompt}\"}],",
+      "    tools=tools,",
+      "    tool_choice=\"auto\",",
+      ")",
+      "",
+      "# Handle tool call",
+      "message = response.choices[0].message",
+      "if message.tool_calls:",
+      "    tool_call = message.tool_calls[0]",
+      "    args = json.loads(tool_call.function.arguments)",
+      "    print(f\"Tool: {tool_call.function.name}, Args: {args}\")",
+      ""
+    ],
+    "description": "Tool Calling — definición + call + manejo de respuesta"
+  },
+
+  // ─────────────────────────────────────────────
+  //  ERROR HANDLING
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Error handling (try/except)": {
+    "prefix": "oai-try",
+    "body": [
+      "from openai import (",
+      "    APIConnectionError,",
+      "    APITimeoutError,",
+      "    AuthenticationError,",
+      "    BadRequestError,",
+      "    RateLimitError,",
+      ")",
+      "",
+      "try:",
+      "    response = client.chat.completions.create(",
+      "        model=\"${1:gpt-5.4-mini}\",",
+      "        messages=[{\"role\": \"user\", \"content\": \"${2:Your prompt}\"}]",
+      "    )",
+      "    print(response.choices[0].message.content)",
+      "",
+      "except RateLimitError as e:",
+      "    print(f\"Rate limit hit: {e}\")",
+      "except AuthenticationError as e:",
+      "    print(f\"Auth error — check your API key: {e}\")",
+      "except APITimeoutError as e:",
+      "    print(f\"Request timed out: {e}\")",
+      "except APIConnectionError as e:",
+      "    print(f\"Connection error: {e}\")",
+      "except BadRequestError as e:",
+      "    print(f\"Bad request: {e}\")",
+      ""
+    ],
+    "description": "Try/except con errores tipados del SDK de OpenAI"
+  },
+
+  "OpenAI: Error handling (with retries)": {
+    "prefix": "oai-retry",
+    "body": [
+      "import time",
+      "from openai import RateLimitError, APIConnectionError, APITimeoutError",
+      "",
+      "def call_with_retry(prompt: str, model: str = \"${1:gpt-5.4-mini}\", max_retries: int = 3) -> str:",
+      "    for attempt in range(max_retries):",
+      "        try:",
+      "            response = client.chat.completions.create(",
+      "                model=model,",
+      "                messages=[{\"role\": \"user\", \"content\": prompt}]",
+      "            )",
+      "            return response.choices[0].message.content",
+      "        except RateLimitError:",
+      "            wait = 2 ** attempt  # exponential backoff: 1s, 2s, 4s",
+      "            print(f\"Rate limit — retrying in {wait}s...\")",
+      "            time.sleep(wait)",
+      "        except (APIConnectionError, APITimeoutError) as e:",
+      "            print(f\"Network error on attempt {attempt + 1}: {e}\")",
+      "            if attempt == max_retries - 1:",
+      "                raise",
+      "            time.sleep(1)",
+      "    raise RuntimeError(\"Max retries exceeded\")",
+      ""
+    ],
+    "description": "Wrapper con retry automático y exponential backoff"
+  },
+
+  // ─────────────────────────────────────────────
+  //  RESPONSES API (nueva, reemplaza Assistants)
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Responses API (basic)": {
+    "prefix": "oai-response",
+    "body": [
+      "response = client.responses.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    input=\"${2:Your prompt here}\",",
+      ")",
+      "print(response.output_text)",
+      ""
+    ],
+    "description": "Responses API — la nueva API recomendada por OpenAI"
+  },
+
+  "OpenAI: Responses API (with previous_response_id)": {
+    "prefix": "oai-response-thread",
+    "body": [
+      "# First turn",
+      "r1 = client.responses.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    input=\"${2:First message}\",",
+      ")",
+      "",
+      "# Subsequent turns — state is managed server-side",
+      "r2 = client.responses.create(",
+      "    model=\"${1:gpt-5.4-mini}\",",
+      "    input=\"${3:Follow-up message}\",",
+      "    previous_response_id=r1.id,",
+      ")",
+      "print(r2.output_text)",
+      ""
+    ],
+    "description": "Responses API con historial server-side"
+  },
+
+  // ─────────────────────────────────────────────
+  //  HELPERS & FUNCIONES
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Helper get_completion": {
+    "prefix": "oai-helper-completion",
+    "body": [
+      "def get_completion(prompt: str, model: str = \"gpt-5.4-mini\") -> str:",
+      "    response = client.chat.completions.create(",
+      "        model=model,",
+      "        messages=[{\"role\": \"user\", \"content\": prompt}]",
+      "    )",
+      "    return response.choices[0].message.content",
+      ""
+    ],
+    "description": "Helper básico para chat completions"
+  },
+
+  "OpenAI: Helper get_completion (async)": {
+    "prefix": "oai-helper-async",
+    "body": [
+      "async def get_completion(prompt: str, model: str = \"gpt-5.4-mini\") -> str:",
+      "    response = await client.chat.completions.create(",
+      "        model=model,",
+      "        messages=[{\"role\": \"user\", \"content\": prompt}]",
+      "    )",
+      "    return response.choices[0].message.content",
+      ""
+    ],
+    "description": "Helper async para chat completions"
+  },
+
+  "OpenAI: Helper chat_with_system": {
+    "prefix": "oai-helper-system",
+    "body": [
+      "def chat(user_msg: str, system_msg: str = \"You are a helpful assistant.\", model: str = \"gpt-5.4-mini\") -> str:",
+      "    response = client.chat.completions.create(",
+      "        model=model,",
+      "        messages=[",
+      "            {\"role\": \"system\", \"content\": system_msg},",
+      "            {\"role\": \"user\", \"content\": user_msg},",
+      "        ]",
+      "    )",
+      "    return response.choices[0].message.content",
+      ""
+    ],
+    "description": "Helper con system message configurable"
+  },
+
+  "OpenAI: messages array": {
+    "prefix": "oai-messages",
+    "body": [
+      "messages = [",
+      "    {\"role\": \"system\", \"content\": \"${1:System prompt}\"},",
+      "    {\"role\": \"user\", \"content\": \"${2:User input}\"},",
+      "]"
+    ],
+    "description": "Array de mensajes estándar"
+  },
+
+  // ─────────────────────────────────────────────
+  //  EMBEDDINGS
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Embeddings": {
+    "prefix": "oai-embed",
+    "body": [
+      "response = client.embeddings.create(",
+      "    input=\"${1:Your text here}\",",
+      "    model=\"${2:text-embedding-3-small}\"",
+      ")",
+      "vector = response.data[0].embedding",
+      "print(f\"Dimensions: {len(vector)}\")",
+      ""
+    ],
+    "description": "Generar embeddings de texto"
+  },
+
+  // ─────────────────────────────────────────────
+  //  IMÁGENES
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Generate image (gpt-image-1)": {
+    "prefix": "oai-image",
+    "body": [
+      "response = client.images.generate(",
+      "    model=\"gpt-image-1\",",
+      "    prompt=\"${1:A futuristic city at sunset}\",",
+      "    size=\"${2|1024x1024,1792x1024,1024x1792|}\",",
+      "    quality=\"${3|standard,hd|}\",",
+      "    n=1,",
+      ")",
+      "image_url = response.data[0].url",
+      "print(image_url)",
+      ""
+    ],
+    "description": "Generar imagen con gpt-image-1"
+  },
+
+  // ─────────────────────────────────────────────
+  //  AUDIO
+  // ─────────────────────────────────────────────
+
+  "OpenAI: Transcription (Whisper)": {
+    "prefix": "oai-transcribe",
+    "body": [
+      "with open(\"${1:audio.mp3}\", \"rb\") as audio_file:",
+      "    transcript = client.audio.transcriptions.create(",
+      "        model=\"whisper-1\",",
+      "        file=audio_file",
+      "    )",
+      "print(transcript.text)",
+      ""
+    ],
+    "description": "Transcribir audio con Whisper"
+  },
+
+  "OpenAI: Text to speech": {
+    "prefix": "oai-tts",
+    "body": [
+      "response = client.audio.speech.create(",
+      "    model=\"gpt-audio-1.5\",",
+      "    voice=\"${1|alloy,echo,fable,onyx,nova,shimmer|}\",",
+      "    input=\"${2:Text to convert to speech}\"",
+      ")",
+      "response.stream_to_file(\"${3:output.mp3}\")",
+      ""
+    ],
+    "description": "Text to speech con gpt-audio-1.5"
+  },
+
+  // ─────────────────────────────────────────────
+  //  MODELOS — OPENAI (esenciales)
+  // ─────────────────────────────────────────────
+
+  "Model: gpt-5.4": {
+    "prefix": "oai-model-gpt54",
+    "body": "\"gpt-5.4\"",
+    "description": "GPT-5.4 — flagship (Mar 2026)"
+  },
+  "Model: gpt-5.4-mini": {
+    "prefix": "oai-model-gpt54-mini",
+    "body": "\"gpt-5.4-mini\"",
+    "description": "GPT-5.4 Mini — rápido, bajo costo"
+  },
+  "Model: o3": {
+    "prefix": "oai-model-o3",
+    "body": "\"o3\"",
+    "description": "o3 — razonamiento profundo"
+  },
+  "Model: o3-mini": {
+    "prefix": "oai-model-o3-mini",
+    "body": "\"o3-mini\"",
+    "description": "o3-mini — razonamiento costo-efectivo"
+  },
+  "Model: gpt-image-1": {
+    "prefix": "oai-model-image",
+    "body": "\"gpt-image-1\"",
+    "description": "gpt-image-1 — generación de imágenes"
+  },
+  "Model: whisper-1": {
+    "prefix": "oai-model-whisper",
+    "body": "\"whisper-1\"",
+    "description": "whisper-1 — transcripción de audio"
+  },
+  "Model: text-embedding-3-small": {
+    "prefix": "oai-model-emb-small",
+    "body": "\"text-embedding-3-small\"",
+    "description": "text-embedding-3-small — embeddings 1536d"
+  },
+  "Model: text-embedding-3-large": {
+    "prefix": "oai-model-emb-large",
+    "body": "\"text-embedding-3-large\"",
+    "description": "text-embedding-3-large — embeddings 3072d"
+  },
+
+  // ─────────────────────────────────────────────
+  //  MODELOS — PROVEEDORES COMPATIBLES (esenciales)
+  // ─────────────────────────────────────────────
+
+  "Model [Groq]: llama-4-maverick": {
+    "prefix": "oai-model-groq-llama4",
+    "body": "\"meta-llama/llama-4-maverick-17b-128e-instruct\"",
+    "description": "Llama 4 Maverick via Groq — mejor balance calidad/velocidad"
+  },
+  "Model [Groq]: llama-3.1-8b-instant": {
+    "prefix": "oai-model-groq-fast",
+    "body": "\"llama-3.1-8b-instant\"",
+    "description": "Llama 3.1 8B via Groq — máxima velocidad"
+  },
+  "Model [DeepSeek]: deepseek-chat": {
+    "prefix": "oai-model-deepseek",
+    "body": "\"deepseek-chat\"",
+    "description": "DeepSeek V3 — base_url: https://api.deepseek.com"
+  },
+  "Model [DeepSeek]: deepseek-reasoner": {
+    "prefix": "oai-model-deepseek-r1",
+    "body": "\"deepseek-reasoner\"",
+    "description": "DeepSeek R1 — razonamiento CoT"
+  },
+  "Model [xAI]: grok-3": {
+    "prefix": "oai-model-grok",
+    "body": "\"grok-3\"",
+    "description": "Grok 3 via xAI — base_url: https://api.x.ai/v1"
+  },
+  "Model [Ollama]: llama3": {
+    "prefix": "oai-model-ollama",
+    "body": "\"llama3\"",
+    "description": "Llama 3 local via Ollama — base_url: http://localhost:11434/v1"
+  },
+
+  // ─────────────────────────────────────────────
+  //  BASE URLS
+  // ─────────────────────────────────────────────
+
+  "Base URL: Groq": {
+    "prefix": "oai-url-groq",
+    "body": "\"https://api.groq.com/openai/v1\"",
+    "description": "Base URL de Groq"
+  },
+  "Base URL: DeepSeek": {
+    "prefix": "oai-url-deepseek",
+    "body": "\"https://api.deepseek.com\"",
+    "description": "Base URL de DeepSeek"
+  },
+  "Base URL: xAI (Grok)": {
+    "prefix": "oai-url-xai",
+    "body": "\"https://api.x.ai/v1\"",
+    "description": "Base URL de xAI / Grok"
+  },
+  "Base URL: Ollama (local)": {
+    "prefix": "oai-url-ollama",
+    "body": "\"http://localhost:11434/v1\"",
+    "description": "Base URL de Ollama local"
+  }
 }

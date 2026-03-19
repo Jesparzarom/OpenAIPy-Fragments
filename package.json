@@ -2,7 +2,7 @@
   "name": "openaipy-fragments",
   "displayName": "OpenAIPY Fragments IntelliSense",
   "description": "Powerful Python snippets for OpenAI v1.0+ and compatible APIs (Groq, Ollama, DeepSeek). Maintained by Mango Estudio Web.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "publisher": "Jesparzarom",
   "author": {
     "name": "Juan E. | Mango Estudio Web",
