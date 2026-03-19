@@ -1,17 +1,27 @@
 {
   "name": "openaipy-fragments",
   "displayName": "OpenAIPY Fragments IntelliSense",
-  "description": "Simplify your coding with ready-to-use Python snippets for OpenAI library.",
-  "version": "1.0.0",
+  "description": "Powerful Python snippets for OpenAI v1.0+ and compatible APIs (Groq, Ollama, DeepSeek). Maintained by Mango Estudio Web.",
+  "version": "2.0.0",
   "publisher": "Jesparzarom",
   "author": {
-    "name": "Juan E."
+    "name": "Juan E. | Mango Estudio Web",
+    "url": "https://github.com/Jesparzarom"
   },
   "engines": {
     "vscode": "^1.78.0"
   },
   "categories": [
     "Snippets"
+  ],
+  "keywords": [
+    "openai",
+    "python",
+    "gpt-4o",
+    "groq",
+    "ollama",
+    "snippets",
+    "ai"
   ],
   "icon": "demos/OpenAiPy.png",
   "galleryBanner": {
@@ -30,9 +40,9 @@
       }
     ]
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Jesparzarom/OpenAIPy-fragments/issues"
+    "url": "https://github.com/Jesparzarom/OpenAIPy-Fragments/issues"
   },
   "homepage": "https://github.com/Jesparzarom/OpenAIPy-Fragments/blob/main/README.md"
 }
