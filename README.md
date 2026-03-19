@@ -1,6 +1,3 @@
-=========================================
-ARCHIVO: README.md (VERSIÓN DETALLADA)
-=========================================
 # OpenAIPy Fragments 🚀
 
 [![Version](https://img.shields.io/visual-studio-marketplace/v/Jesparzarom.openaipy-fragments.svg?label=Version&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Jesparzarom.openaipy-fragments)
